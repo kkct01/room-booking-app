@@ -1,0 +1,30 @@
+package com.wofoo.app.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wofoo.app.service.BookingService;
+import com.wofoo.app.service.UserService;
+
+@RestController
+@RequestMapping("/wofoo/booking")
+public class BookingController {
+	
+	private final BookingService bookingService;
+	private final UserService userService;
+	
+	public BookingController(BookingService bookingService, UserService userService) {
+		this.bookingService = bookingService;
+		this.userService = userService;
+	}
+	
+	public ResponseEntity<Object> saveBooking(@PathVariable String inputName) {
+		userService.findUserByName(inputName);
+		
+		return null;
+		
+	}
+
+}

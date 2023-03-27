@@ -1,0 +1,11 @@
+package com.wofoo.app.exception;
+
+public class UserNotFoundException extends RuntimeException {
+	
+	private final String message;
+	
+	public UserNotFoundException(String message) {
+		this.message = message;
+	}
+
+}

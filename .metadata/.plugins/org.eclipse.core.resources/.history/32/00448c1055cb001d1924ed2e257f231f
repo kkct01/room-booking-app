@@ -1,0 +1,5 @@
+package com.wofoo.app.entity;
+
+public class Booking {
+
+}

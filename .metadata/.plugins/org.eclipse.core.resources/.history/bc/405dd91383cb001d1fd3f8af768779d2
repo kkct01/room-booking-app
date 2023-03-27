@@ -1,0 +1,21 @@
+package com.wofoo.app.service;
+
+import org.springframework.stereotype.Service;
+
+import com.wofoo.app.entity.Booking;
+import com.wofoo.app.repository.BookingRepository;
+
+@Service
+public class BookingService {
+	
+	private final BookingRepository bookingRepo;
+
+	public BookingService(BookingRepository bookingRepo) {
+		this.bookingRepo = bookingRepo;
+	}
+	
+	public Booking saveBooking(Booking booking) {
+		return bookingRepo.save(booking);	
+	}
+
+}

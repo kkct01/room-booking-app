@@ -1,0 +1,5 @@
+package com.wofoo.app.exception;
+
+public class CustomError {
+
+}

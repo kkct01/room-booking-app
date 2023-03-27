@@ -1,0 +1,64 @@
+package com.wofoo.app.entity;
+
+import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "booking")
+public class Booking {
+	
+	@Id
+	@SequenceGenerator(name = "booking_seq", sequenceName = "booking_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_seq")
+	private int id;
+	
+	@Column(name = "room", nullable = false)
+	@NotBlank
+	private String roomNumber;
+	
+	@Column(nullable = false)
+	@NotBlank
+	private String description;
+	
+	@Column(name = "time_created", nullable = false)
+	@CreationTimestamp
+	private LocalDateTime createdAt;
+	
+	@Column(name = "start_time", nullable = false)
+	@NotBlank
+	private LocalDateTime startTime;
+	
+	@Column(name = "end_time", nullable = false)
+	@NotBlank
+	private LocalDateTime endTime;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user")
+	private User user;
+
+	@Override
+	public String toString() {
+		return "Booking [id=" + id + ", roomNumber=" + roomNumber + ", description=" + description + ", createdAt="
+				+ createdAt + ", user=" + user + "]";
+	}
+}

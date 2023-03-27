@@ -1,0 +1,5 @@
+package com.wofoo.app.repository;
+
+public class UserRepository {
+
+}

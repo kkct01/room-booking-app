@@ -1,0 +1,45 @@
+package com.wofoo.app.controller;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wofoo.app.entity.Booking;
+import com.wofoo.app.entity.User;
+import com.wofoo.app.service.BookingService;
+import com.wofoo.app.service.UserService;
+
+@RestController
+@RequestMapping("/wofoo/booking")
+public class BookingController {
+
+	private final BookingService bookingService;
+	private final UserService userService;
+
+	public BookingController(BookingService bookingService, UserService userService) {
+		this.bookingService = bookingService;
+		this.userService = userService;
+	}
+
+	public ResponseEntity<Object> saveBooking(@RequestBody Booking booking) {
+		try {
+			User user = userService.findUserByName(booking.getUser().getName());
+			booking.setUser(user);
+			Booking savedBooking = bookingService.saveBooking(booking);
+			return ResponseEntity.ok(savedBooking);
+		} catch (DataIntegrityViolationException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Booking data violates constraints");
+		} catch (TransactionSystemException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Failed to save booking due to transaction error");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("An unexpected error occured" + e.getMessage());
+		}
+	}
+}

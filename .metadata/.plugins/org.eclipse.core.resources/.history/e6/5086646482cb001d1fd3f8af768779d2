@@ -1,0 +1,21 @@
+package com.wofoo.app.exception;
+
+import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class CustomError implements Serializable {
+	
+	private String message;
+	
+	public String getMessage( ) {
+		return message;
+	}
+	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+	
+}

@@ -1,0 +1,28 @@
+package com.wofoo.app.service;
+
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Service;
+
+import com.wofoo.app.entity.Booking;
+import com.wofoo.app.repository.BookingRepository;
+
+@Service
+public class BookingService {
+	
+	private final BookingRepository bookingRepo;
+
+	public BookingService(BookingRepository bookingRepo) {
+		this.bookingRepo = bookingRepo;
+	}
+	
+	public Booking saveBooking(Booking booking) {
+		LocalDateTime start = booking.getStartTime();
+		LocalDateTime end = booking.getEndTime();
+		if(start == null || end == null || start.isAfter(end)) {
+			throw new IllegalArgumentException("Invalid start time or end time");
+		}
+		return bookingRepo.save(booking);	
+	}
+
+}
